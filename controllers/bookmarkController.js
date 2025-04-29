@@ -137,7 +137,8 @@ exports.deleteBookmark = async (req, res) => {
       });
     }
 
-    await bookmark.remove();
+    // Using the recommended method to delete the bookmark
+    await Bookmark.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
       success: true,

@@ -15,6 +15,12 @@ const BookmarkSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a description'],
   },
+  content: {
+    type: String,
+    default: function() {
+      return this.description;
+    }
+  },
   url: {
     type: String,
     required: [true, 'Please add a URL'],
@@ -23,15 +29,24 @@ const BookmarkSchema = new mongoose.Schema({
       'Please use a valid URL with HTTP or HTTPS',
     ],
   },
-  imageUrl: {
+  image: {
     type: String,
-  },
-  source: {
-    type: String,
-    required: [true, 'Please add a source'],
   },
   publishedAt: {
     type: Date,
+  },
+  source: {
+    name: {
+      type: String,
+      required: [true, 'Please add a source name'],
+    },
+    url: {
+      type: String,
+      match: [
+        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+        'Please use a valid URL with HTTP or HTTPS',
+      ],
+    }
   },
   createdAt: {
     type: Date,
